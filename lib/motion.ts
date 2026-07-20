@@ -7,14 +7,39 @@ export const luxuryTransition: Transition = {
   ease: luxuryEase,
 };
 
+export const slowTransition: Transition = {
+  duration: 0.9,
+  ease: luxuryEase,
+};
+
 export const fadeUpVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 32, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1 },
 };
 
 export const fadeInVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
+};
+
+export const scaleInVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.94 },
+  visible: { opacity: 1, scale: 1 },
+};
+
+export const slideFromLeftVariants: Variants = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0 },
+};
+
+export const slideFromRightVariants: Variants = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0 },
+};
+
+export const imageRevealVariants: Variants = {
+  hidden: { opacity: 0, scale: 1.08 },
+  visible: { opacity: 1, scale: 1 },
 };
 
 export const staggerContainerVariants: Variants = {
@@ -27,7 +52,12 @@ export const staggerContainerVariants: Variants = {
   },
 };
 
-export const scaleInVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.96 },
-  visible: { opacity: 1, scale: 1 },
+export const heroLineVariants: Variants = {
+  hidden: { opacity: 0, y: 40, filter: "blur(4px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
+
+export const cardHoverTransition: Transition = {
+  duration: 0.4,
+  ease: luxuryEase,
 };

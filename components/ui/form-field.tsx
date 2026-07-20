@@ -1,4 +1,5 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
+import { cloneElement, isValidElement } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -10,7 +11,7 @@ export function LuxuryInput({ className, error, ...props }: LuxuryInputProps) {
   return (
     <input
       className={cn(
-        "h-14 w-full rounded-2xl border border-border bg-white px-5 text-base text-heading outline-none transition-all placeholder:text-muted focus:border-twilight focus:ring-2 focus:ring-twilight/10 disabled:cursor-not-allowed disabled:opacity-50",
+        "h-14 w-full rounded-2xl border border-border bg-white px-5 text-base text-heading outline-none transition-all placeholder:text-muted focus:border-spruce focus:ring-2 focus:ring-spruce/10 disabled:cursor-not-allowed disabled:opacity-50",
         error && "border-destructive focus:border-destructive focus:ring-destructive/10",
         className,
       )}
@@ -32,7 +33,7 @@ export function LuxuryTextarea({
   return (
     <textarea
       className={cn(
-        "min-h-[160px] w-full resize-y rounded-2xl border border-border bg-white px-5 py-4 text-base text-heading outline-none transition-all placeholder:text-muted focus:border-twilight focus:ring-2 focus:ring-twilight/10 disabled:cursor-not-allowed disabled:opacity-50",
+        "min-h-[160px] w-full resize-y rounded-2xl border border-border bg-white px-5 py-4 text-base text-heading outline-none transition-all placeholder:text-muted focus:border-spruce focus:ring-2 focus:ring-spruce/10 disabled:cursor-not-allowed disabled:opacity-50",
         error && "border-destructive focus:border-destructive focus:ring-destructive/10",
         className,
       )}
@@ -55,7 +56,7 @@ export function LuxurySelect({
   return (
     <select
       className={cn(
-        "h-14 w-full appearance-none rounded-2xl border border-border bg-white px-5 text-base text-heading outline-none transition-all focus:border-twilight focus:ring-2 focus:ring-twilight/10 disabled:cursor-not-allowed disabled:opacity-50",
+        "h-14 w-full appearance-none rounded-2xl border border-border bg-white px-5 text-base text-heading outline-none transition-all focus:border-spruce focus:ring-2 focus:ring-spruce/10 disabled:cursor-not-allowed disabled:opacity-50",
         error && "border-destructive focus:border-destructive focus:ring-destructive/10",
         className,
       )}
@@ -87,7 +88,7 @@ export function FormLabel({
     >
       {children}
       {required ? (
-        <span className="ml-1 text-twilight" aria-hidden>
+        <span className="ml-1 text-spruce" aria-hidden>
           *
         </span>
       ) : null}
@@ -112,12 +113,19 @@ export function FormField({
   children,
   className,
 }: FormFieldProps) {
+  const fieldChild = isValidElement(children)
+    ? cloneElement(children as ReactElement<{ "aria-describedby"?: string }>, {
+        ...(children.props as object),
+        ...(error ? { "aria-describedby": `${htmlFor}-error` } : {}),
+      })
+    : children;
+
   return (
     <div className={cn("space-y-2", className)}>
       <FormLabel htmlFor={htmlFor} required={required}>
         {label}
       </FormLabel>
-      {children}
+      {fieldChild}
       {error ? (
         <p id={`${htmlFor}-error`} className="text-sm text-destructive" role="alert">
           {error}

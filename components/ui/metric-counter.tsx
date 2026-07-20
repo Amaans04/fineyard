@@ -75,10 +75,10 @@ export function MetricCounter({
 
   return (
     <div ref={ref} className={cn("text-center md:text-left", className)}>
-      <p className="font-heading text-5xl font-medium tracking-tight text-heading md:text-6xl">
+      <p className="font-heading text-5xl font-medium tracking-tight text-spruce md:text-6xl">
         {prefix}
         {renderedValue}
-        {suffix}
+        <span className="text-gold">{suffix}</span>
       </p>
       <p className="mt-3 font-subheading text-xs font-semibold tracking-[0.12em] text-muted uppercase">
         {label}

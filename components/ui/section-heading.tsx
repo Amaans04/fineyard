@@ -52,6 +52,13 @@ export function SectionHeading({
           {description}
         </Text>
       ) : null}
+      <div
+        className={cn(
+          "gold-line-long mt-2",
+          isCenter && "mx-auto",
+        )}
+        aria-hidden
+      />
     </div>
   );
 }

@@ -25,7 +25,7 @@ export function ServiceCard({
   return (
     <article
       className={cn(
-        "group overflow-hidden rounded-[20px] border border-border bg-white transition-all duration-300 hover:-translate-y-2 hover:border-twilight/20 hover:shadow-[0_20px_60px_rgba(31,25,100,0.08)]",
+        "group overflow-hidden rounded-[20px] border border-border bg-white transition-all duration-300 hover:-translate-y-2 hover:border-gold/30 hover:shadow-[0_20px_60px_rgba(3,87,24,0.08)]",
         className,
       )}
     >
@@ -38,8 +38,8 @@ export function ServiceCard({
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-twilight/10 transition-colors duration-300 group-hover:bg-twilight/20" />
-          <span className="absolute top-5 left-5 font-heading text-5xl font-medium text-white/30">
+          <div className="absolute inset-0 bg-gradient-to-t from-spruce/60 via-transparent to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80" />
+          <span className="absolute top-5 left-5 font-heading text-5xl font-medium text-gold/40">
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
@@ -49,7 +49,7 @@ export function ServiceCard({
               {title}
             </Heading>
             <ArrowUpRight
-              className="size-5 shrink-0 text-twilight transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="size-5 shrink-0 text-spruce transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold"
               strokeWidth={1.5}
             />
           </div>

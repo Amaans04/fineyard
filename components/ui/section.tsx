@@ -8,7 +8,7 @@ type SectionProps = {
   className?: string;
   containerClassName?: string;
   id?: string;
-  background?: "default" | "white" | "beige" | "twilight";
+  background?: "default" | "white" | "beige" | "twilight" | "warm" | "premium";
   spacing?: "default" | "compact" | "hero";
   containerSize?: "default" | "reading" | "hero";
   bordered?: boolean;
@@ -17,8 +17,10 @@ type SectionProps = {
 const backgroundClasses = {
   default: "bg-background",
   white: "bg-white",
-  beige: "bg-beige/35",
+  beige: "bg-gradient-beige",
   twilight: "bg-twilight text-white",
+  warm: "bg-gradient-warm pattern-dots",
+  premium: "bg-gradient-premium text-white",
 };
 
 const spacingClasses = {

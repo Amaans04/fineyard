@@ -19,13 +19,18 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { TestimonialCarousel } from "@/components/ui/testimonial-carousel";
 import { Timeline } from "@/components/ui/timeline";
 import {
+  DesignCategoryRail,
+  PromoStrip,
+  TrustRail,
+} from "@/components/features/home/livspace-sections";
+import {
   FounderPreviewSection,
   InstagramSection,
   ProjectsSection,
 } from "@/components/features/home/projects-section";
 import { HeroSection } from "@/components/features/home/hero-section";
-import { MobileStickyCta, MobileWhatsAppCta } from "@/components/features/home/mobile-cta";
 import { PageLoader } from "@/components/features/home/page-loader";
+import { ServicesShowcaseSection } from "@/components/features/home/services-showcase";
 import {
   homeFaqs,
   homeFeatures,
@@ -45,9 +50,29 @@ export function Homepage() {
       <PageLoader />
       <HeroSection />
 
-      <Section background="white" spacing="compact" bordered>
+      <Section background="white" spacing="compact" bordered className="border-gold/15">
+        <TrustRail />
+      </Section>
+
+      <Section background="default" spacing="compact">
+        <PromoStrip />
+      </Section>
+
+      <Section background="warm">
+        <SectionHeading
+          eyebrow="Design Ideas"
+          title="Inspiration for Home Interiors"
+          description="Explore room-by-room design ideas curated for premium Bengaluru homes."
+          className="mb-10"
+        />
+        <DesignCategoryRail />
+      </Section>
+
+      <Section background="white" spacing="compact" bordered className="border-gold/15">
         <MetricGrid metrics={[...homeMetrics]} />
       </Section>
+
+      <ServicesShowcaseSection />
 
       <Section background="default">
         <SectionHeading
@@ -94,7 +119,7 @@ export function Homepage() {
         <MaterialSwatchGrid materials={[...homeMaterials]} />
       </Section>
 
-      <Section background="default">
+      <Section background="warm">
         <SectionHeading
           eyebrow="Transformation"
           title="Before & After"
@@ -121,7 +146,7 @@ export function Homepage() {
       <FounderPreviewSection />
       <InstagramSection />
 
-      <Section background="white">
+      <Section background="default">
         <SectionHeading
           eyebrow="Questions"
           title="Frequently Asked"
@@ -130,7 +155,7 @@ export function Homepage() {
         <Accordion items={[...homeFaqs]} />
       </Section>
 
-      <Section background="beige" spacing="compact">
+      <Section background="premium" spacing="compact">
         <CtaBanner
           eyebrow="Begin Your Project"
           title="Let's Design Your Dream Space."
@@ -139,11 +164,9 @@ export function Homepage() {
           primaryHref="/contact"
           secondaryLabel="WhatsApp Us"
           secondaryHref={`https://wa.me/${siteConfig.contact.whatsapp.replace(/\D/g, "")}`}
+          variant="premium"
         />
       </Section>
-
-      <MobileStickyCta />
-      <MobileWhatsAppCta />
     </>
   );
 }

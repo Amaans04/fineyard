@@ -1,51 +1,26 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { ChevronDown, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { Container } from "@/components/layout/container";
+import { HeroShowcase } from "@/components/features/home/hero-showcase";
+import { SplitTextReveal, TextReveal } from "@/components/motion/text-reveal";
 import { LuxuryButton } from "@/components/ui/luxury-button";
-import { Eyebrow, Heading, Text } from "@/components/ui/typography";
+import { Eyebrow, Text } from "@/components/ui/typography";
+import { homeMetrics } from "@/constants/home-content";
 import { sampleImages } from "@/constants/sample-content";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
-import { luxuryEase } from "@/lib/motion";
-
-const Hero3D = dynamic(
-  () => import("@/components/features/home/hero-3d").then((mod) => mod.Hero3D),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex h-[320px] w-full items-center justify-center rounded-[24px] border border-border bg-beige/20 sm:h-[380px] lg:h-full lg:min-h-[480px]">
-        <div className="size-8 animate-pulse rounded-full bg-gold/30" />
-      </div>
-    ),
-  },
-);
+import { luxuryEase, scaleInVariants } from "@/lib/motion";
 
 export function HeroSection() {
   const reducedMotion = useReducedMotion();
-  const [enable3d, setEnable3d] = useState(false);
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      const prefersReduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      const isMobile = window.matchMedia("(max-width: 1023px)").matches;
-      const isLowPower = navigator.hardwareConcurrency <= 4;
-
-      setEnable3d(!prefersReduced && !isMobile && !isLowPower);
-    });
-
-    return () => cancelAnimationFrame(frame);
-  }, []);
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-background">
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative min-h-[100svh] overflow-hidden">
+      {/* Cinematic background */}
+      <div className="absolute inset-0">
         <div className="hero-bg-zoom relative h-full w-full">
           <Image
             src={sampleImages.hero}
@@ -56,81 +31,83 @@ export function HeroSection() {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(250,250,248,0.92)_0%,rgba(250,250,248,0.72)_45%,rgba(31,25,100,0.18)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-hero" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(198,167,106,0.18),transparent_45%)]" />
       </div>
 
-      <Container className="relative flex min-h-[100svh] flex-col justify-center pt-28 pb-24 lg:pt-32">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <Container className="relative flex min-h-[100svh] flex-col justify-center pt-28 pb-32 lg:pt-32">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
           <div className="max-w-2xl">
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: luxuryEase }}
-            >
-              <Eyebrow className="mb-6">Luxury Interior Design · Bengaluru</Eyebrow>
-            </motion.div>
+            <TextReveal delay={0}>
+              <Eyebrow className="mb-8">Luxury Interior Design · Bengaluru</Eyebrow>
+            </TextReveal>
 
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: luxuryEase, delay: 0.12 }}
-            >
-              <Heading as="h1" size="hero" className="max-w-xl">
-                Designing Spaces That Feel Like Home.
-              </Heading>
-            </motion.div>
+            <h1 className="font-heading text-hero font-medium tracking-tight text-heading">
+              <SplitTextReveal
+                text="Designing Spaces That Feel Like Home."
+                delay={0.1}
+              />
+            </h1>
 
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: luxuryEase, delay: 0.24 }}
-            >
-              <Text size="lg" className="mt-6 max-w-xl">
+            <TextReveal delay={0.35}>
+              <Text size="lg" className="mt-8 max-w-xl text-body/90">
                 Fine Yard crafts timeless interiors where architecture,
-                functionality, and elegance exist in perfect harmony.
+                functionality, and elegance exist in perfect harmony — tailored
+                to how you live.
               </Text>
-            </motion.div>
+            </TextReveal>
 
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: luxuryEase, delay: 0.36 }}
-              className="mt-10 flex flex-col gap-4 sm:flex-row"
-            >
-              <LuxuryButton href="/contact">Book a Consultation</LuxuryButton>
-              <LuxuryButton href="/projects" variant="secondary">
-                Explore Our Projects
-              </LuxuryButton>
-            </motion.div>
+            <TextReveal delay={0.48}>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <LuxuryButton href="/contact" size="lg">
+                  Book a Consultation
+                </LuxuryButton>
+                <LuxuryButton href="/projects" variant="secondary" size="lg">
+                  Explore Our Projects
+                </LuxuryButton>
+              </div>
+            </TextReveal>
+
+            {/* Inline trust strip */}
+            <TextReveal delay={0.6}>
+              <div className="mt-14 grid grid-cols-2 gap-6 border-t border-gold/25 pt-10 sm:grid-cols-4">
+                {homeMetrics.map((metric) => (
+                  <div key={metric.label}>
+                    <p className="font-heading text-3xl font-medium text-twilight md:text-4xl">
+                      {metric.value}
+                      {metric.suffix}
+                    </p>
+                    <p className="mt-1 font-subheading text-[10px] font-semibold tracking-[0.12em] text-muted uppercase">
+                      {metric.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </TextReveal>
           </div>
 
           <motion.div
-            initial={reducedMotion ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: luxuryEase, delay: 0.2 }}
+            initial={reducedMotion ? false : "hidden"}
+            animate="visible"
+            variants={scaleInVariants}
+            transition={{ duration: 1.1, ease: luxuryEase, delay: 0.25 }}
             className="relative"
           >
-            {enable3d ? (
-              <div className="overflow-hidden rounded-[28px] border border-white/30 bg-white/10 p-3 backdrop-blur-md">
-                <Hero3D />
+            <div className="relative">
+              <div className="absolute -top-3 -right-3 z-10 hidden items-center gap-2 rounded-full border border-gold/30 bg-white/90 px-4 py-2 backdrop-blur-sm lg:flex">
+                <Sparkles className="size-3.5 text-gold" strokeWidth={1.5} />
+                <span className="font-subheading text-[10px] font-semibold tracking-[0.1em] text-spruce uppercase">
+                  Bespoke Design
+                </span>
               </div>
-            ) : (
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] border border-border shadow-[0_24px_80px_rgba(31,25,100,0.12)] lg:aspect-auto lg:min-h-[480px]">
-                <Image
-                  src={sampleImages.project1}
-                  alt="Fine Yard interior design showcase"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover"
-                />
-              </div>
-            )}
+              <HeroShowcase />
+            </div>
           </motion.div>
         </div>
 
         <motion.div
           aria-hidden
-          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 lg:block"
+          className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 lg:flex lg:flex-col lg:items-center lg:gap-2"
           animate={reducedMotion ? undefined : { y: [0, 8, 0] }}
           transition={
             reducedMotion
@@ -138,7 +115,10 @@ export function HeroSection() {
               : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
           }
         >
-          <ChevronDown className="size-5 text-twilight/60" strokeWidth={1.5} />
+          <span className="font-subheading text-[10px] font-medium tracking-[0.14em] text-spruce/70 uppercase">
+            Scroll
+          </span>
+          <ChevronDown className="size-5 text-gold" strokeWidth={1.5} />
         </motion.div>
       </Container>
     </section>

@@ -55,16 +55,21 @@ export function useScrollPosition(): ScrollState {
   useEffect(() => {
     if (!reducedMotion) return;
 
+    let lastScroll = window.scrollY;
+
     const onScroll = () => {
       const scroll = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
+      const direction = scroll > lastScroll ? 1 : scroll < lastScroll ? -1 : 0;
 
       setState({
         scroll,
         isScrolled: scroll > SCROLL_THRESHOLD,
-        isHidden: scroll > HIDE_THRESHOLD,
+        isHidden: scroll > HIDE_THRESHOLD && direction === 1,
         progress: max > 0 ? scroll / max : 0,
       });
+
+      lastScroll = scroll;
     };
 
     onScroll();

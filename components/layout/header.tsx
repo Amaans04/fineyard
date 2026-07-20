@@ -2,27 +2,25 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useLenis } from "lenis/react";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { Container } from "@/components/layout/container";
+import { useMobileNav } from "@/components/layout/mobile-nav-context";
 import { LuxuryButton } from "@/components/ui/luxury-button";
 import { navigation, primaryCta, siteConfig } from "@/config/site";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { cn } from "@/lib/utils";
 
-type MobileNavProps = {
-  open: boolean;
-  onClose: () => void;
-};
-
-export function MobileNav({ open, onClose }: MobileNavProps) {
+export function MobileNav() {
   const pathname = usePathname();
   const reducedMotion = useReducedMotion();
   const lenis = useLenis();
+  const { open, close } = useMobileNav();
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -39,52 +37,71 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
     };
   }, [open, lenis]);
 
-  // Close menu only when route changes — not when callback identity changes.
   useEffect(() => {
-    onClose();
+    close();
   }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open, close]);
 
   return (
     <AnimatePresence>
       {open ? (
         <motion.div
-          className="fixed inset-0 z-[100] lg:hidden"
+          className="fixed inset-0 z-[110] lg:hidden"
           initial={reducedMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.25 }}
         >
           <button
             type="button"
             aria-label="Close navigation menu"
-            className="absolute inset-0 bg-twilight/20 backdrop-blur-sm"
-            onClick={onClose}
+            className="absolute inset-0 bg-twilight/30 backdrop-blur-md"
+            onClick={close}
           />
 
           <motion.nav
+            ref={navRef}
             id="mobile-navigation"
             aria-label="Mobile navigation"
-            className="absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-background px-6 py-8 shadow-2xl"
-            initial={reducedMotion ? false : { x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="ios-sheet absolute inset-x-0 bottom-0 flex max-h-[85svh] flex-col px-6 pt-3 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+            initial={reducedMotion ? false : { y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", stiffness: 420, damping: 38 }}
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={0.12}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 100 || info.velocity.y > 500) close();
+            }}
           >
-            <div className="mb-12 flex items-center justify-between">
+            <div className="mx-auto mb-6 h-1 w-10 rounded-full bg-border" aria-hidden />
+
+            <div className="mb-6 flex items-center justify-between">
               <span className="font-heading text-2xl font-semibold text-heading">
                 Menu
               </span>
               <button
                 type="button"
                 aria-label="Close menu"
-                className="flex size-11 items-center justify-center rounded-full border border-border text-heading transition-colors hover:border-twilight/30 hover:bg-white"
-                onClick={onClose}
+                className="flex size-11 items-center justify-center rounded-full border border-border bg-white/80 text-heading backdrop-blur-sm transition-colors active:scale-95"
+                onClick={close}
               >
                 <X className="size-5" strokeWidth={1.5} />
               </button>
             </div>
 
-            <ul className="flex flex-col gap-2 overflow-y-auto">
+            <ul className="flex flex-col gap-1 overflow-y-auto">
               {navigation.map((item, index) => {
                 const isActive =
                   item.href === "/"
@@ -94,30 +111,35 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                 return (
                   <motion.li
                     key={item.href}
-                    initial={reducedMotion ? false : { opacity: 0, x: 24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 * index, duration: 0.35 }}
+                    initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.04 * index, duration: 0.35 }}
                   >
                     <Link
                       href={item.href}
-                      onClick={onClose}
+                      onClick={close}
                       className={cn(
-                        "block py-4 font-heading text-3xl font-medium tracking-tight transition-colors",
-                        isActive ? "text-twilight" : "text-heading hover:text-twilight",
+                        "flex items-center justify-between rounded-2xl px-4 py-4 font-heading text-xl font-medium tracking-tight transition-colors active:scale-[0.99]",
+                        isActive
+                          ? "bg-spruce/10 text-spruce"
+                          : "text-heading hover:bg-beige/40",
                       )}
                     >
                       {item.label}
+                      {isActive ? (
+                        <span className="size-2 rounded-full bg-gold" aria-hidden />
+                      ) : null}
                     </Link>
                   </motion.li>
                 );
               })}
             </ul>
 
-            <div className="mt-auto space-y-6 pt-10">
-              <LuxuryButton href={primaryCta.href} className="w-full" onClick={onClose}>
+            <div className="mt-6 space-y-4 border-t border-border/80 pt-6">
+              <LuxuryButton href={primaryCta.href} className="w-full" onClick={close}>
                 {primaryCta.label}
               </LuxuryButton>
-              <p className="text-sm text-muted">{siteConfig.contact.email}</p>
+              <p className="text-center text-sm text-muted">{siteConfig.contact.email}</p>
             </div>
           </motion.nav>
         </motion.div>
@@ -126,12 +148,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
   );
 }
 
-type HeaderBarProps = {
-  onMenuToggle: () => void;
-  isMenuOpen: boolean;
-};
-
-function HeaderBar({ onMenuToggle, isMenuOpen }: HeaderBarProps) {
+function HeaderBar() {
   const pathname = usePathname();
 
   return (
@@ -166,7 +183,7 @@ function HeaderBar({ onMenuToggle, isMenuOpen }: HeaderBarProps) {
                   href={item.href}
                   className={cn(
                     "group relative py-2 font-subheading text-[13px] font-medium tracking-[0.04em] uppercase transition-colors",
-                    isActive ? "text-twilight" : "text-heading/80 hover:text-twilight",
+                    isActive ? "text-spruce" : "text-heading/80 hover:text-spruce",
                   )}
                 >
                   {item.label}
@@ -191,37 +208,14 @@ function HeaderBar({ onMenuToggle, isMenuOpen }: HeaderBarProps) {
         >
           {primaryCta.label}
         </LuxuryButton>
-
-        <button
-          type="button"
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isMenuOpen}
-          aria-controls="mobile-navigation"
-          className="relative z-10 flex size-11 touch-manipulation items-center justify-center rounded-full border border-border bg-background/80 text-heading transition-colors hover:border-twilight/30 hover:bg-white lg:hidden"
-          onClick={onMenuToggle}
-        >
-          {isMenuOpen ? (
-            <X className="size-5" strokeWidth={1.5} />
-          ) : (
-            <Menu className="size-5" strokeWidth={1.5} />
-          )}
-        </button>
       </div>
     </>
   );
 }
 
-function HeaderShell({
-  isScrolled,
-  isHidden,
-}: {
-  isScrolled: boolean;
-  isHidden: boolean;
-}) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
-  const toggleMenu = useCallback(() => setMenuOpen((open) => !open), []);
+export function Header() {
+  const { isScrolled, isHidden } = useScrollPosition();
+  const { open } = useMobileNav();
 
   return (
     <>
@@ -233,28 +227,22 @@ function HeaderShell({
       >
         <div
           className={cn(
-            "border-b transition-[background-color,backdrop-filter,box-shadow,border-color] duration-500",
-            isScrolled || menuOpen
-              ? "border-border/80 bg-background/90 shadow-[0_8px_32px_rgba(31,25,100,0.06)] backdrop-blur-xl"
-              : "border-transparent bg-transparent",
+            "transition-[background-color,backdrop-filter,box-shadow,border-color] duration-500",
+            isScrolled || open
+              ? "ios-glass-nav border-b border-white/20 shadow-[0_8px_32px_rgba(3,87,24,0.08)]"
+              : "border-b border-transparent bg-transparent",
           )}
         >
           <Container
             as="div"
-            className="relative flex h-[88px] items-center justify-between"
+            className="relative flex h-[72px] items-center justify-between lg:h-[88px]"
           >
-            <HeaderBar onMenuToggle={toggleMenu} isMenuOpen={menuOpen} />
+            <HeaderBar />
           </Container>
         </div>
       </header>
 
-      <MobileNav open={menuOpen} onClose={closeMenu} />
+      <MobileNav />
     </>
   );
-}
-
-export function Header() {
-  const { isScrolled, isHidden } = useScrollPosition();
-
-  return <HeaderShell isScrolled={isScrolled} isHidden={isHidden} />;
 }

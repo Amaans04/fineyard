@@ -28,7 +28,7 @@ export function ProjectCard({
   return (
     <article
       className={cn(
-        "group relative overflow-hidden rounded-[24px] border border-border bg-white",
+        "group relative overflow-hidden rounded-[24px] border border-border bg-white transition-all duration-300 hover:-translate-y-2 hover:border-gold/30 hover:shadow-[0_24px_80px_rgba(3,87,24,0.1)]",
         featured && "md:col-span-2 md:row-span-2",
         className,
       )}
@@ -52,9 +52,9 @@ export function ProjectCard({
             }
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-twilight/80 via-twilight/20 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-spruce/90 via-twilight/40 to-transparent opacity-75 transition-opacity duration-500 group-hover:opacity-90" />
           <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
-            <p className="mb-2 font-subheading text-xs font-semibold tracking-[0.12em] text-beige uppercase">
+            <p className="mb-2 font-subheading text-xs font-semibold tracking-[0.12em] text-gold uppercase">
               {category}
             </p>
             <h3 className="font-heading text-2xl font-medium text-white md:text-3xl">

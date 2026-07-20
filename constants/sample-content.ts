@@ -1,5 +1,5 @@
 export const sampleImages = {
-  hero: "https://images.unsplash.com/photo-1618221192570-077c11f5a9a8?auto=format&fit=crop&w=1600&q=80",
+  hero: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
   about: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80",
   founder: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80",
   project1: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
@@ -7,15 +7,15 @@ export const sampleImages = {
   project3: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80",
   service1: "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80",
   service2: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=80",
-  bedroom: "https://images.unsplash.com/photo-1616594039964-40874a6f8b2f?auto=format&fit=crop&w=1200&q=80",
-  wardrobe: "https://images.unsplash.com/photo-1595428774223-ef52624120b2?auto=format&fit=crop&w=1200&q=80",
+  bedroom: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80",
+  wardrobe: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
   commercial: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-  walnut: "https://images.unsplash.com/photo-1615874959477-df991aeabc52?auto=format&fit=crop&w=600&q=80",
+  walnut: "https://images.unsplash.com/photo-1615529328331-f8917597711f?auto=format&fit=crop&w=600&q=80",
   brass: "https://images.unsplash.com/photo-1615529328331-f8917597711f?auto=format&fit=crop&w=600&q=80",
   linen: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80",
-  studio1: "https://images.unsplash.com/photo-1618220179427-9c464a9d6524?auto=format&fit=crop&w=800&q=80",
+  studio1: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
   studio2: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
-  studio3: "https://images.unsplash.com/photo-1615876234916-2a0a0a0a0a0a?auto=format&fit=crop&w=800&q=80",
+  studio3: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
 } as const;
 
 export const sampleFaqs = [

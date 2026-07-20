@@ -121,16 +121,25 @@ export function Text({
 type EyebrowProps = {
   children: ReactNode;
   className?: string;
+  variant?: "default" | "gold" | "light";
 };
 
-export function Eyebrow({ children, className }: EyebrowProps) {
+export function Eyebrow({ children, className, variant = "default" }: EyebrowProps) {
+  const variantClasses = {
+    default: "text-spruce",
+    gold: "text-gold",
+    light: "text-beige",
+  };
+
   return (
     <p
       className={cn(
-        "font-subheading text-xs font-semibold tracking-[0.16em] text-twilight uppercase",
+        "flex items-center gap-3 font-subheading text-xs font-semibold tracking-[0.16em] uppercase",
+        variantClasses[variant],
         className,
       )}
     >
+      <span className="gold-line shrink-0" aria-hidden />
       {children}
     </p>
   );

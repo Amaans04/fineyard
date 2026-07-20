@@ -14,7 +14,7 @@ export const siteConfig = {
     email: "hello@fineyard.in",
     phone: "+91 98765 43210",
     whatsapp: "+919876543210",
-    address: "Indiranagar, Bengaluru, Karnataka 560038",
+    address: "JP Nagar, Bengaluru, Karnataka 560078",
   },
   social: {
     instagram: "https://instagram.com/fineyard",

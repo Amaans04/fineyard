@@ -9,8 +9,8 @@ const glassCardVariants = cva(
     variants: {
       variant: {
         default:
-          "border-white/25 bg-white/60 shadow-[0_8px_32px_rgba(31,25,100,0.06)] backdrop-blur-xl",
-        solid: "border-border bg-white shadow-[0_8px_32px_rgba(31,25,100,0.04)]",
+          "ios-glass-card shadow-[0_8px_32px_rgba(3,87,24,0.08)]",
+        solid: "border-border/80 bg-white/90 shadow-[0_8px_32px_rgba(3,87,24,0.06)] backdrop-blur-sm",
         beige: "border-border/60 bg-beige/40",
         elevated:
           "border-border bg-white shadow-[0_20px_60px_rgba(31,25,100,0.08)]",

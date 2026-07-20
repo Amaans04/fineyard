@@ -54,9 +54,16 @@ export function ConsultationForm({
 
   const onSubmit = async (data: ConsultationFormValues) => {
     try {
-      // Phase 5 will wire this to email/CRM integration.
-      await new Promise((resolve) => setTimeout(resolve, 900));
-      console.info("Consultation form submission:", data);
+      const response = await fetch("/api/consultation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
       setSubmitted(true);
       reset();
       onSubmitSuccess?.();
@@ -98,7 +105,6 @@ export function ConsultationForm({
               autoComplete="name"
               placeholder="Your full name"
               error={errors.name?.message}
-              aria-describedby={errors.name ? "name-error" : undefined}
               {...register("name")}
             />
           </FormField>
@@ -168,7 +174,7 @@ export function ConsultationForm({
           >
             <LuxuryInput
               id="location"
-              placeholder="e.g. Indiranagar, Bengaluru"
+              placeholder="e.g. JP Nagar, Bengaluru"
               error={errors.location?.message}
               {...register("location")}
             />

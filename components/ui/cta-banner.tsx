@@ -12,14 +12,16 @@ type CtaBannerProps = {
   primaryHref: string;
   secondaryLabel?: string;
   secondaryHref?: string;
-  variant?: "beige" | "twilight" | "white";
+  variant?: "beige" | "twilight" | "white" | "premium";
   className?: string;
 };
 
 const variantClasses = {
-  beige: "border-border bg-beige/35 text-heading",
+  beige: "border-gold/20 bg-gradient-beige text-heading",
   twilight: "border-twilight bg-twilight text-white",
-  white: "border-border bg-white text-heading",
+  white: "border-border bg-white text-heading luxury-shadow",
+  premium:
+    "border-gold/25 bg-transparent text-white shadow-[inset_0_1px_0_rgba(198,167,106,0.2)]",
 };
 
 export function CtaBanner({
@@ -33,23 +35,30 @@ export function CtaBanner({
   variant = "beige",
   className,
 }: CtaBannerProps) {
-  const isTwilight = variant === "twilight";
+  const isDark = variant === "twilight" || variant === "premium";
 
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[28px] border p-8 md:p-12",
+        "relative overflow-hidden rounded-[28px] border p-8 md:p-12",
         variantClasses[variant],
         className,
       )}
     >
-      <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+      {variant === "premium" ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-gold/15 blur-3xl"
+        />
+      ) : null}
+
+      <div className="relative flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
         <div className="max-w-2xl space-y-4">
           {eyebrow ? (
             <p
               className={cn(
                 "font-subheading text-xs font-semibold tracking-[0.12em] uppercase",
-                isTwilight ? "text-beige" : "text-twilight",
+                isDark ? "text-gold" : "text-spruce",
               )}
             >
               {eyebrow}
@@ -58,14 +67,14 @@ export function CtaBanner({
           <Heading
             as="h2"
             size="h2"
-            className={cn(isTwilight && "text-white")}
+            className={cn(isDark && "text-white")}
           >
             {title}
           </Heading>
           {description ? (
             <Text
               size="lg"
-              className={cn(isTwilight ? "text-white/80" : "text-body")}
+              className={cn(isDark ? "text-white/80" : "text-body")}
             >
               {description}
             </Text>
@@ -75,7 +84,7 @@ export function CtaBanner({
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <LuxuryButton
             href={primaryHref}
-            variant={isTwilight ? "gold" : "primary"}
+            variant={isDark ? "gold" : "primary"}
             size="lg"
             className="w-full sm:w-auto"
           >
@@ -84,12 +93,9 @@ export function CtaBanner({
           {secondaryLabel && secondaryHref ? (
             <LuxuryButton
               href={secondaryHref}
-              variant={isTwilight ? "secondary" : "secondary"}
+              variant={isDark ? "outline" : "secondary"}
               size="lg"
-              className={cn(
-                "w-full sm:w-auto",
-                isTwilight && "border-white/30 text-white hover:bg-white/10",
-              )}
+              className="w-full sm:w-auto"
             >
               {secondaryLabel}
             </LuxuryButton>

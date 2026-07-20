@@ -31,9 +31,9 @@ export function FeatureCard({
       )}
     >
       {Icon ? (
-        <div className="mb-6 flex size-12 items-center justify-center rounded-2xl border border-border bg-background transition-all duration-300 group-hover:border-gold/30 group-hover:bg-beige/30">
+        <div className="mb-6 flex size-12 items-center justify-center rounded-2xl border border-gold/20 bg-beige/25 transition-all duration-300 group-hover:border-gold/50 group-hover:bg-beige/50">
           <Icon
-            className="size-5 text-twilight transition-transform duration-300 group-hover:rotate-6"
+            className="size-5 text-spruce transition-transform duration-300 group-hover:rotate-6"
             strokeWidth={1.5}
           />
         </div>

@@ -11,13 +11,13 @@ import { sampleImages, sampleProcess } from "@/constants/sample-content";
 
 export const homeProjects = [
   {
-    id: "indiranagar-residence",
-    title: "Indiranagar Residence",
+    id: "jp-nagar-residence",
+    title: "JP Nagar Residence",
     location: "Bengaluru",
     category: "Apartments",
     filter: "apartments",
     image: sampleImages.project1,
-    href: "/projects/indiranagar-residence",
+    href: "/projects/jp-nagar-residence",
     featured: true,
   },
   {
@@ -107,12 +107,12 @@ export const homeMaterials = [
   },
   {
     name: "Oak",
-    texture: "https://images.unsplash.com/photo-1615976750500-0a0a0a0a0a0a?auto=format&fit=crop&w=600&q=80",
+    texture: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80",
     description: "Light, organic texture",
   },
   {
     name: "Marble",
-    texture: "https://images.unsplash.com/photo-1618220179427-9c464a9d6524?auto=format&fit=crop&w=600&q=80",
+    texture: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=600&q=80",
     description: "Italian veining, timeless",
   },
   {
@@ -142,7 +142,7 @@ export const homeTestimonials = [
     quote:
       "Fine Yard understood our lifestyle before suggesting a single finish. The process felt calm, professional, and deeply personal.",
     name: "Priya & Arjun",
-    location: "Indiranagar",
+    location: "JP Nagar",
     projectType: "Full Home Interior",
   },
   {
@@ -184,7 +184,7 @@ export const homeFaqs = [
     id: "locations",
     question: "Which areas in Bengaluru do you serve?",
     answer:
-      "We work across Bengaluru including Indiranagar, Whitefield, Koramangala, HSR Layout, Jayanagar, and surrounding areas.",
+      "We work across Bengaluru including JP Nagar, Whitefield, Koramangala, HSR Layout, Jayanagar, and surrounding areas.",
   },
 ] as const;
 

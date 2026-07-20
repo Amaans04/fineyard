@@ -24,10 +24,15 @@ export function BlogListing({ posts }: BlogListingProps) {
     return posts.filter((post) => post.category === activeCategory);
   }, [activeCategory, posts]);
 
-  const filters = blogCategories.map((category) => ({
-    id: category,
-    label: category,
-  }));
+  const filters = useMemo(() => {
+    const categories = new Set(posts.map((post) => post.category));
+    return [
+      { id: "All", label: "All" },
+      ...blogCategories
+        .filter((category) => category !== "All" && categories.has(category))
+        .map((category) => ({ id: category, label: category })),
+    ];
+  }, [posts]);
 
   return (
     <Section background="white">
@@ -42,10 +47,24 @@ export function BlogListing({ posts }: BlogListingProps) {
         items={filters}
         activeId={activeCategory}
         onChange={setActiveCategory}
+        panelId="blog-posts-panel"
         className="mb-12"
       />
 
-      <div className="grid gap-8 md:grid-cols-2">
+      {filtered.length === 0 ? (
+        <div
+          id="blog-posts-panel"
+          role="tabpanel"
+          className="rounded-[20px] border border-dashed border-border p-12 text-center"
+        >
+          <p className="font-heading text-2xl text-heading">No articles yet</p>
+          <p className="mt-3 text-body">
+            We&apos;re preparing content for this category. Try another filter or
+            check back soon.
+          </p>
+        </div>
+      ) : (
+      <div id="blog-posts-panel" role="tabpanel" className="grid gap-8 md:grid-cols-2">
         {filtered.map((post, index) => (
           <FadeIn key={post.slug} delay={index * 0.04}>
             <article className="group overflow-hidden rounded-[24px] border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(31,25,100,0.08)]">
@@ -82,6 +101,7 @@ export function BlogListing({ posts }: BlogListingProps) {
           </FadeIn>
         ))}
       </div>
+      )}
     </Section>
   );
 }

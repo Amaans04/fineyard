@@ -6,18 +6,22 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const luxuryButtonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-[14px] font-subheading text-sm font-medium tracking-[0.02em] transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-twilight/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-[14px] font-subheading text-sm font-medium tracking-[0.02em] transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary:
-          "bg-twilight text-white shadow-[0_8px_32px_rgba(31,25,100,0.18)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(31,25,100,0.24)] active:translate-y-0",
+          "bg-spruce text-white shadow-[0_8px_32px_rgba(3,87,24,0.22)] hover:-translate-y-1 hover:bg-spruce-light hover:shadow-[0_12px_40px_rgba(3,87,24,0.28)] active:translate-y-0",
         secondary:
-          "border border-border bg-transparent text-heading hover:-translate-y-1 hover:border-twilight/30 hover:bg-white",
+          "border border-gold/40 bg-white/80 text-heading backdrop-blur-sm hover:-translate-y-1 hover:border-gold hover:bg-beige/30 hover:shadow-[0_8px_24px_rgba(198,167,106,0.15)]",
         ghost:
-          "bg-transparent text-heading underline-offset-4 hover:text-twilight hover:underline",
+          "bg-transparent text-heading underline-offset-4 hover:text-spruce hover:underline",
         gold:
-          "bg-gold text-white hover:-translate-y-1 hover:brightness-110 active:translate-y-0",
+          "bg-gold text-white shadow-[0_8px_32px_rgba(198,167,106,0.28)] hover:-translate-y-1 hover:brightness-110 active:translate-y-0",
+        twilight:
+          "bg-twilight text-white shadow-[0_8px_32px_rgba(31,25,100,0.18)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(31,25,100,0.24)] active:translate-y-0",
+        outline:
+          "border-2 border-white/80 bg-transparent text-white hover:-translate-y-1 hover:bg-white/10 hover:border-white",
       },
       size: {
         default: "h-12 px-6",
@@ -63,8 +67,8 @@ export function LuxuryButton({
 
   if (href && !isDisabled) {
     return (
-      <Link href={href} className={classes} onClick={onClick}>
-        {children}
+      <Link href={href} className={classes} onClick={onClick} aria-busy={loading}>
+        {content}
       </Link>
     );
   }

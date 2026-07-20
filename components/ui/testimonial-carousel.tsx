@@ -45,7 +45,7 @@ export function TestimonialCarousel({
 
   return (
     <div className={cn("relative", className)}>
-      <div className="overflow-hidden">
+      <div className="overflow-hidden" aria-live="polite" aria-atomic="true">
         <div
           className="flex transition-transform duration-700 ease-out"
           style={{ transform: `translateX(-${index * 100}%)` }}
@@ -71,7 +71,7 @@ export function TestimonialCarousel({
                   className={cn(
                     "h-1.5 rounded-full transition-all duration-300",
                     dotIndex === index
-                      ? "w-8 bg-twilight"
+                      ? "w-8 bg-spruce"
                       : "w-3 bg-border hover:bg-gold/60",
                   )}
                 />

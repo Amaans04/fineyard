@@ -3,9 +3,9 @@ import { sampleImages } from "@/constants/sample-content";
 
 export const projects: Project[] = [
   {
-    slug: "indiranagar-residence",
-    title: "Indiranagar Residence",
-    location: "Indiranagar, Bengaluru",
+    slug: "jp-nagar-residence",
+    title: "JP Nagar Residence",
+    location: "JP Nagar, Bengaluru",
     category: "Luxury Apartment",
     filter: "apartments",
     coverImage: sampleImages.project1,

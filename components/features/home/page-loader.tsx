@@ -4,30 +4,29 @@ import { useEffect, useState } from "react";
 
 import { Loader } from "@/components/ui/loader";
 
-function shouldShowLoader() {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  return !sessionStorage.getItem("fine-yard-loaded");
-}
-
 export function PageLoader() {
-  const [visible, setVisible] = useState(shouldShowLoader);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!visible) {
+    if (sessionStorage.getItem("fine-yard-loaded")) {
       return;
     }
 
     sessionStorage.setItem("fine-yard-loaded", "true");
 
-    const timer = window.setTimeout(() => {
+    const showTimer = window.setTimeout(() => {
+      setVisible(true);
+    }, 0);
+
+    const hideTimer = window.setTimeout(() => {
       setVisible(false);
     }, 1200);
 
-    return () => window.clearTimeout(timer);
-  }, [visible]);
+    return () => {
+      window.clearTimeout(showTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, []);
 
   if (!visible) {
     return null;

@@ -24,7 +24,7 @@ function createService(
 ): Service {
   return {
     faqs: data.faqs ?? defaultFaqs,
-    relatedProjectSlugs: data.relatedProjectSlugs ?? ["indiranagar-residence", "whitefield-villa"],
+    relatedProjectSlugs: data.relatedProjectSlugs ?? ["jp-nagar-residence", "whitefield-villa"],
     ...data,
   };
 }
@@ -157,7 +157,7 @@ export const services: Service[] = [
       { title: "Site Supervision", description: "Regular visits to ensure craftsmanship standards." },
     ],
     materials: ["Full Material Palette", "Custom Joinery", "Flooring", "Lighting"],
-    relatedProjectSlugs: ["indiranagar-residence", "whitefield-villa", "koramangala-loft"],
+    relatedProjectSlugs: ["jp-nagar-residence", "whitefield-villa", "koramangala-loft"],
   }),
   createService({
     slug: "villa-interiors",
@@ -174,7 +174,7 @@ export const services: Service[] = [
       { title: "Landscape Connection", description: "Materials and views that connect inside and out." },
     ],
     materials: ["Natural Stone", "Oak", "Marble", "Linen"],
-    relatedProjectSlugs: ["whitefield-villa", "indiranagar-residence"],
+    relatedProjectSlugs: ["whitefield-villa", "jp-nagar-residence"],
   }),
   createService({
     slug: "commercial",

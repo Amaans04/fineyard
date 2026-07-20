@@ -18,13 +18,13 @@ export function MaterialSwatch({
   className,
 }: MaterialSwatchProps) {
   return (
-    <button
-      type="button"
+    <div
+      role="figure"
+      aria-label={`${name} material${description ? `: ${description}` : ""}`}
       className={cn(
-        "group relative aspect-square overflow-hidden rounded-[20px] border border-border bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_16px_48px_rgba(31,25,100,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-twilight/40",
+        "group relative aspect-square overflow-hidden rounded-[20px] border border-border bg-white text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_16px_48px_rgba(31,25,100,0.08)]",
         className,
       )}
-      aria-label={`View ${name} material`}
     >
       <Image
         src={texture}
@@ -33,7 +33,7 @@ export function MaterialSwatch({
         sizes="(max-width: 768px) 50vw, 20vw"
         className="object-cover transition-transform duration-700 group-hover:scale-110"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-twilight/80 via-transparent to-transparent opacity-80" />
+      <div className="absolute inset-0 bg-gradient-to-t from-spruce/85 via-twilight/30 to-transparent opacity-85" />
       <div className="absolute inset-x-0 bottom-0 p-4">
         <p className="font-heading text-lg font-medium text-white">{name}</p>
         {description ? (
@@ -42,7 +42,7 @@ export function MaterialSwatch({
           </p>
         ) : null}
       </div>
-    </button>
+    </div>
   );
 }
 

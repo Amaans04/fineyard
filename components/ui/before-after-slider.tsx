@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -33,20 +33,13 @@ export function BeforeAfterSlider({
     setPosition(Math.min(100, Math.max(0, next)));
   }, []);
 
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const onMove = (event: PointerEvent) => updatePosition(event.clientX);
-    const onUp = () => setIsDragging(false);
-
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
-
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-    };
-  }, [isDragging, updatePosition]);
+  const startDrag = useCallback(
+    (clientX: number) => {
+      setIsDragging(true);
+      updatePosition(clientX);
+    },
+    [updatePosition],
+  );
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "ArrowLeft") {
@@ -63,9 +56,23 @@ export function BeforeAfterSlider({
     <div
       ref={containerRef}
       className={cn(
-        "relative aspect-[16/10] overflow-hidden rounded-[24px] border border-border bg-white select-none",
+        "relative aspect-[16/10] cursor-ew-resize overflow-hidden rounded-[24px] border border-border bg-white select-none",
         className,
       )}
+      onPointerDown={(event) => {
+        if (event.button !== 0) return;
+        event.currentTarget.setPointerCapture(event.pointerId);
+        startDrag(event.clientX);
+      }}
+      onPointerMove={(event) => {
+        if (!isDragging) return;
+        updatePosition(event.clientX);
+      }}
+      onPointerUp={(event) => {
+        setIsDragging(false);
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }}
+      onPointerCancel={() => setIsDragging(false)}
     >
       <Image
         src={afterImage}
@@ -102,11 +109,11 @@ export function BeforeAfterSlider({
         aria-valuenow={Math.round(position)}
         onKeyDown={onKeyDown}
         onPointerDown={(event) => {
-          event.preventDefault();
-          setIsDragging(true);
-          updatePosition(event.clientX);
+          event.stopPropagation();
+          event.currentTarget.setPointerCapture(event.pointerId);
+          startDrag(event.clientX);
         }}
-        className="absolute top-1/2 z-20 flex size-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-white/40 bg-twilight text-white shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        className="absolute top-1/2 z-20 flex size-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-gold/50 bg-spruce text-white shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
         style={{ left: `${position}%`, touchAction: "none" }}
       >
         <span className="font-subheading text-[10px] font-semibold tracking-wider">

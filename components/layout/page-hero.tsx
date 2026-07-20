@@ -52,12 +52,12 @@ export function PageHero({
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(250,250,248,0.94)_0%,rgba(250,250,248,0.82)_50%,rgba(31,25,100,0.12)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(250,250,248,0.96)_0%,rgba(244,232,193,0.75)_40%,rgba(3,87,24,0.25)_75%,rgba(31,25,100,0.35)_100%)]" />
         </>
       ) : (
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,232,193,0.45),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(31,25,100,0.06),transparent_35%)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(244,232,193,0.55),transparent_42%),radial-gradient(circle_at_bottom_left,rgba(3,87,24,0.08),transparent_38%)]"
         />
       )}
 
